@@ -1,0 +1,5 @@
+-Isrc/inc
+-Wall
+-Wextra
+-Wpedatic
+-std=c99
