@@ -2,4 +2,4 @@
 -Wall
 -Wextra
 -Wpedatic
--std=c99
+-std=c11
