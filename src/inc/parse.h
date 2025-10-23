@@ -1,10 +1,5 @@
 #pragma once
-
-/* Use to reference literal content without copying (immutable) */
-typedef struct {
-    const int len;
-    const char *str;
-} _sefImStr;
+#include "warntype.h"
 
 /* IR node type 
  * - LTL: string literal
@@ -13,7 +8,7 @@ typedef struct {
  * - FMT: format
  */
 typedef enum {
-    LTR, PFMT, FMT
+    _SEFNODE_LTR, _SEFNODE_PFMT, _SEFNODE_FMT
 } _sefNodeType;
 
 typedef struct {
@@ -22,15 +17,16 @@ typedef struct {
 
 typedef struct {
     _sefNodeType type;
-    _sefImStr str;
+    _sefStrOffset *str;
 } _sefNodeLTR;
 
 typedef struct {
-    _sefImStr key;
-    _sefImStr arg;
+    _sefStrOffset key;
+    _sefStrOffset *arg;
 } _sefArg;
 
-/* Both FMT and PFMT take the same structure differ by type */
+/* Both FMT and PFMT take the same structure differ by type
+ * pos is only required in the first PFMT, FMT signates the end */
 typedef struct {
     _sefNodeType type;
     int pos;
@@ -44,9 +40,14 @@ typedef struct {
  * Parser output
  */
 typedef struct {
+    // Pointer used to free every strings in _sefFmtIR
+    // in destructor, generated from lexor output
+    _sefStrAlloc buf;
+
     char **deplist;
+    // strs in IR are Offset to buf
     _sefNodeGeneric *ir;
 } _sefFmtIR;
 
-_sefFmtIR _sefFmtParse(char *fmtstr);
+_sefFmtIR _sefFmtParse(const char *fmtstr);
 
