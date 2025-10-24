@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sef/context.h"
-
 /* Format function arguments
  * Key-Value string pair */
 typedef struct {
@@ -15,6 +13,7 @@ typedef struct {
     SEF_FmtFn_t fn;
 } SEF_RegistrySlot_t;
 
+#include "sef/context.h"
 
 int SEF_RegistryExists(SEF_Ctx_t *ctx, const char *specstr);
 SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *ctx, const char *specstr);

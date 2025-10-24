@@ -1,7 +1,7 @@
 #pragma once
 
-#include "sef/_ds/dynamic_array.h"
+#include "sef/registry.h"
 
 typedef struct {
-    _sefDStack_Registry_t registry;
+    SEF_RegistrySlot_t *registry;
 } _sefCtx_t;
