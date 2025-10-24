@@ -11,6 +11,12 @@ const char * const _SEF_ErrStrArray[SEF_ErrLast + 1] = {
     // ErrOK
     "Ok",
 
+    // ErrMemAllocFailed
+    "Memory allocation failed",
+
+    // ErrRegFnNotFound
+    "Function not found in registry",
+
     // ErrLast
     "Unknown error code"
 };

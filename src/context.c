@@ -1,11 +1,15 @@
 #include "sef/_context.h"
 #include "sef/_ds/dynamic_array.h"
+#include "sef/error.h"
 #include <stdlib.h>
 #include "sef/context.h"
 
 SEF_Ctx_t *SEF_CtxCreate(SEF_RegistrySlot_t reg[]) {
     _sefCtx_t *ctx = malloc(sizeof(_sefCtx_t));
-    if (!ctx) return NULL;
+    if (!ctx) {
+        SEF_Errno = SEF_ErrMemAllocFailed;
+        return NULL;
+    }
     ctx->registry = reg;
     return (SEF_Ctx_t *)ctx;
 }
