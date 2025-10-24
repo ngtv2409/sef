@@ -7,6 +7,6 @@
  * to an offset of another str */
 
 // str is allocated by malloc, could be free
-typedef char* _sefStrAlloc;
+typedef char* _sefStrAlloc_t;
 // str is allocated on the heap but is not the root pointer, cannot be freed
-typedef char* _sefStrOffset;
+typedef char* _sefStrOffset_t;

@@ -4,3 +4,4 @@
 #include "parse.h"
 
 __SEFDS_IMPORT_DStack_IMPL(_sefDStack_NodeFMT, _sefNodeFMT);
+__SEFDS_IMPORT_DStack_IMPL(_sefDStack_Registry, _sefRegistrySlot);
