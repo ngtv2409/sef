@@ -1,14 +1,8 @@
 #pragma once
 #include "sef/_warntype.h"
 
-/* IR node type 
- * - LTL: string literal
- * - PFMT: piped format (the output will be send to the next node)
- * Note: PFMT expected FMT as the next node
- * - FMT: format
- */
 typedef enum {
-    _SEFNODE_LTR = 0, _SEFNODE_PFMT, _SEFNODE_FMT
+    _SEFNODE_LTR = 0, _SEFNODE_BFMT, _SEFNODE_PFMT
 } _sefNodeType_t;
 
 typedef struct {
@@ -25,8 +19,6 @@ typedef struct {
     _sefStrAlloc_t *arg;
 } _sefArg_t;
 
-/* Both FMT and PFMT take the same structure differ by type
- * pos is only required in the first PFMT, FMT signates the end */
 typedef struct {
     int type;
     int pos;
