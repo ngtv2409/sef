@@ -1,6 +1,8 @@
 // template header
 #pragma once
 
+#include <stdlib.h> // IWYU pragma: keep
+
 // minimal dynamic stack template
 // only need Push since it's mostly for internal buffers
 

@@ -1,5 +1,4 @@
 #include "sef/_context.h"
-#include "sef/_ds/dynamic_array.h"
 #include "sef/error.h"
 #include <stdlib.h>
 #include "sef/context.h"

@@ -4,6 +4,6 @@
  * Master API header
  */
 
-#include "context.h"
-#include "error.h"
-#include "registry.h"
+#include "context.h" // IWYU pragma: export
+#include "error.h" // IWYU pragma: export
+#include "registry.h" // IWYU pragma: export
