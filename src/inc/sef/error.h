@@ -35,4 +35,4 @@ int *_SEF_errno_addr();
 #define SEF_Errno (*(_SEF_errno_addr()))
 #define SEF_ErrnoClear() (SEF_Errno = SEF_ErrOK)
 #define SEF_ErrStr(err) ((err >= 0 && err < SEF_ErrLast)? (_SEF_ErrStrArray[err]) : (_SEF_ErrStrArray[SEF_ErrLast]))
-#define SEF_ErrnoStr() ((SEF_Errno >= 0 && SEF_Errno < SEF_ErrLast)? (_SEF_ErrStrArray[SEF_Errno]) : (_SEF_ErrStrArray[SEF_ErrLast]))
+#define SEF_ErrnoStr() (SEF_ErrStr(SEF_Errno))
