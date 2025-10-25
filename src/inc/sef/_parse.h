@@ -1,5 +1,4 @@
 #pragma once
-#include "sef/_warntype.h"
 
 typedef enum {
     _SEFNODE_LTR = 0, _SEFNODE_BFMT, _SEFNODE_PFMT
@@ -11,12 +10,12 @@ typedef struct {
 
 typedef struct {
     int type;
-    _sefStrAlloc_t *str;
+    char *str;
 } _sefNodeLTR_t;
 
 typedef struct {
-    _sefStrAlloc_t key;
-    _sefStrAlloc_t *arg;
+    char key;
+    char *arg;
 } _sefArg_t;
 
 typedef struct {
@@ -33,8 +32,7 @@ typedef struct {
  */
 typedef struct {
     char **deplist;
-    // strs in IR are Offset to buf
-    _sefNodeGeneric_t *ir;
+    _sefNodeGeneric_t **nodes;
 } _sefFmtIR_t;
 
 _sefFmtIR_t _sefFmtParse(const char *fmtstr);
