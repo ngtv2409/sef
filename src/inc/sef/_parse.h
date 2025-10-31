@@ -1,7 +1,7 @@
 #pragma once
 
 typedef enum {
-    _SEFNODE_LTR = 0, _SEFNODE_FMT
+    _SEFNODE_LTR = 0, _SEFNODE_BFMT, _SEFNODE_PFMT
 } _sefNodeType_t;
 
 typedef struct {

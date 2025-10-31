@@ -8,6 +8,33 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+static size_t _sefFmtChainRecursive(char *wbuffer, void *arg,
+                                    _sefNodeFMT_t *nodes[], SEF_FmtFn_t depfn[],
+                                    size_t i, size_t j) {
+    
+    _sefSinkHandler cntsink = {_SEF_WTYPE_COUNT, {}};
+    size_t len = depfn[((_sefNodeFMT_t*)(nodes[i]))->fmtid]
+        ((SEF_SinkHandler*)&cntsink, arg, (SEF_FmtFnArg_t*)((_sefNodeFMT_t*)nodes[i])->argv);
+    char buf[len + 1];
+    _sefSinkHandler tmpsink = {
+        _SEF_WTYPE_BUFFER_N, {.buf = {buf, 0, len + 1}}
+    };
+    depfn[((_sefNodeFMT_t*)(nodes[i]))->fmtid]
+        ((SEF_SinkHandler*)&tmpsink, arg, (SEF_FmtFnArg_t*)((_sefNodeFMT_t*)nodes[i])->argv);
+
+    if (i + 1 >= j) {
+        // the end
+        if (wbuffer) {
+            strncpy(wbuffer, buf, len + 1);
+            return len;
+        } else {
+            return strlen(buf);
+        }
+    }
+    return _sefFmtChainRecursive(wbuffer, (void*)buf, nodes, depfn, i + 1, j);
+}
 
 size_t _sefFmtIR(SEF_Ctx_t *ctx, SEF_SinkHandler *sink,
                 SEF_FmtIR_t *_ir, void *args[]) {
@@ -35,12 +62,24 @@ size_t _sefFmtIR(SEF_Ctx_t *ctx, SEF_SinkHandler *sink,
             case _SEFNODE_LTR:
                 n += SEF_SinkWrite(sink ,((_sefNodeLTR_t*)nodes[i])->str);
                 break;
-            case _SEFNODE_FMT:
+            case _SEFNODE_BFMT: {
                 (void)0;
                 void *arg = args[((_sefNodeFMT_t*)(nodes[i]))->pos];
-                n += depfn[((_sefNodeFMT_t*)(nodes[i]))->fmtid](sink, arg, 
-                      (SEF_FmtFnArg_t*)((_sefNodeFMT_t*)nodes[i])->argv);
+                size_t pfmtend;
+                for (pfmtend = i + 1; nodes[pfmtend] &&
+                            nodes[pfmtend]->type == _SEFNODE_PFMT; ++pfmtend);
+                size_t len = _sefFmtChainRecursive(NULL, arg, (_sefNodeFMT_t**)nodes, depfn,
+                                                   i, pfmtend);
+                char buf[len + 1];
+                _sefFmtChainRecursive(buf, arg, (_sefNodeFMT_t**)nodes, depfn,
+                                      i, pfmtend);
+                n += SEF_SinkWrite(sink, buf);
+                i = pfmtend - 1;
                 break;
+            }
+            default:
+            // IR is internal so leave invalid IR undefined
+                (void)0;
         }
     }
     return n;
