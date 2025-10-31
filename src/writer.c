@@ -8,7 +8,9 @@
 size_t SEF_SinkWrite(SEF_SinkHandler *_sink, const char *s) {
     _sefSinkHandler *sink = (_sefSinkHandler*)_sink;
     size_t n = 0;
-    if (sink->wtype == _SEF_WTYPE_BUFFER_N) {
+    if (sink->wtype == _SEF_WTYPE_COUNT) {
+        return strlen(s);
+    } else if (sink->wtype == _SEF_WTYPE_BUFFER_N) {
         _sefSinkBuf inf = sink->sink.buf;
         while (inf.cur < inf.size - 1) {
             if (!s[n]) break;
