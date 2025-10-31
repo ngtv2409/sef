@@ -1,7 +1,7 @@
 #pragma once
 
 typedef enum {
-    _SEFNODE_LTR = 0, _SEFNODE_BFMT, _SEFNODE_PFMT
+    _SEFNODE_LTR = 0, _SEFNODE_FMT
 } _sefNodeType_t;
 
 typedef struct {
@@ -14,7 +14,7 @@ typedef struct {
 } _sefNodeLTR_t;
 
 typedef struct {
-    char key;
+    char *key;
     char *arg;
 } _sefArg_t;
 
@@ -23,7 +23,7 @@ typedef struct {
     int pos;
     // this id is the order in deplist
     int fmtid;
-    _sefArg_t argv[];
+    _sefArg_t *argv;
 } _sefNodeFMT_t;
 
 /*
