@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SEF_WRITER_H
+#define _SEF_WRITER_H
 
 #include <stddef.h>
 #include <stdio.h>
@@ -23,3 +24,5 @@ typedef struct {
         _sefSinkFile file;
     } sink;
 } _sefSinkHandler;
+
+#endif /* _SEF_WRITER_H */

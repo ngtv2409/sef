@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SEF_ERROR_H
+#define SEF_ERROR_H
 
 /* Errno pattern:
  * Only set in errors, stay the same in success
@@ -36,3 +37,5 @@ int *_SEF_errno_addr();
 #define SEF_ErrnoClear() (SEF_Errno = SEF_ErrOK)
 #define SEF_ErrStr(err) ((err >= 0 && err < SEF_ErrLast)? (_SEF_ErrStrArray[err]) : (_SEF_ErrStrArray[SEF_ErrLast]))
 #define SEF_ErrnoStr() (SEF_ErrStr(SEF_Errno))
+
+#endif /* SEF_ERROR_H */

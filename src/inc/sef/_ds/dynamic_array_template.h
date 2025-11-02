@@ -1,5 +1,5 @@
-// template header
-#pragma once
+#ifndef _SEF_DYNAMIC_ARRAY_TEMPLATE_H
+#define _SEF_DYNAMIC_ARRAY_TEMPLATE_H
 
 #include <stdlib.h> // IWYU pragma: keep
 
@@ -38,3 +38,5 @@ typedef struct {\
 int ds##_Alloc(ds *cont, size_t init_cap);\
 void ds##_Free(ds *cont);\
 int ds##_Push(ds *cont, T val);
+
+#endif /* _SEF_DYNAMIC_ARRAY_TEMPLATE_H */

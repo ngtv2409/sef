@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SEF_PARSE_H
+#define _SEF_PARSE_H
 
 #include "sef/args.h"
 
@@ -34,3 +35,5 @@ typedef struct {
 
 _sefFmtIR_t _sefFmtParse(const char *fmtstr);
 
+
+#endif /* _SEF_PARSE_H */

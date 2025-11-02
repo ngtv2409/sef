@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SEF_REGISTRY_H
+#define SEF_REGISTRY_H
 #include "sef/args.h"
 #include "sef/writer.h"
 #include <stddef.h>
@@ -15,3 +16,5 @@ typedef struct {
 
 int SEF_RegistryExists(SEF_Ctx_t *ctx, const char *specstr);
 SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *ctx, const char *specstr);
+
+#endif /* SEF_REGISTRY_H */

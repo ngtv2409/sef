@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SEF_ARGS_H
+#define SEF_ARGS_H
 
 #include <stdlib.h> // IWYU pragma: keep
 
@@ -10,3 +11,5 @@ typedef struct {
 
 int SEF_ArgGet(const SEF_KeyVal_t argv[], const char **dst, const char *key);
 int SEF_ArgGetV(const SEF_KeyVal_t argv[], const char *buf[], const char *keys[]);
+
+#endif /* SEF_ARGS_H */
