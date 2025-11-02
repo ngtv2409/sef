@@ -1,6 +1,10 @@
-#include "sef/registry.h"
-#include "sef/_context.h"
-#include <string.h>
+#include "sef/_pubtypes.h"
+
+int strcmp(const char*, const char*);
+
+typedef struct {
+    SEF_RegistrySlot_t *registry;
+} _sefCtx_t;
 
 int SEF_RegistryExists(SEF_Ctx_t *_ctx, const char *specstr) {
     _sefCtx_t *ctx = (_sefCtx_t*)_ctx;

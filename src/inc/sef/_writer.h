@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdio.h>
+
 enum _sefWriteType {
     _SEF_WTYPE_COUNT,
     _SEF_WTYPE_BUFFER_N,

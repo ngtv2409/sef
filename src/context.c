@@ -1,9 +1,14 @@
-#include "sef/_context.h"
 #include "sef/error.h"
-#include <stdlib.h>
-#include "sef/context.h"
+#include "sef/sef.h"
 
-SEF_Ctx_t *SEF_CtxCreate(SEF_RegistrySlot_t reg[]) {
+#include <stdlib.h>
+
+
+typedef struct {
+    SEF_RegistrySlot_t *registry;
+} _sefCtx_t;
+
+SEF_Ctx_t *SEF_CtxCreate(SEF_RegistrySlot_t *reg) {
     _sefCtx_t *ctx = malloc(sizeof(_sefCtx_t));
     if (!ctx) {
         SEF_Errno = SEF_ErrMemAllocFailed;

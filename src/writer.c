@@ -1,9 +1,10 @@
 #include "sef/_writer.h"
-#include <assert.h>
+
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
-#include "sef/writer.h"
+
+typedef struct SEF_SinkHandler SEF_SinkHandler;
 
 size_t SEF_SinkWrite(SEF_SinkHandler *_sink, const char *s) {
     _sefSinkHandler *sink = (_sefSinkHandler*)_sink;

@@ -1,7 +1,7 @@
 #ifndef _SEF_PARSE_H
 #define _SEF_PARSE_H
 
-#include "sef/args.h"
+#include "sef/_pubtypes.h"
 
 typedef enum {
     _SEFNODE_LTR = 0, _SEFNODE_BFMT, _SEFNODE_PFMT

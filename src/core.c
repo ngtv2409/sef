@@ -1,14 +1,16 @@
-#include "sef/execfmt.h"
 #include "sef/_parse.h"
-#include "sef/context.h"
-#include "sef/error.h"
-#include "sef/registry.h"
-#include "sef/writer.h"
 #include "sef/_writer.h"
+#include "sef/_pubtypes.h"
+
+#include "sef/error.h"
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+size_t SEF_SinkWrite(SEF_SinkHandler *sink, const char *s);
+SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *ctx, const char *specstr);
 
 static size_t _sefFmtChainRecursive(char *wbuffer, void *arg,
                                     _sefNodeFMT_t *nodes[], SEF_FmtFn_t depfn[],

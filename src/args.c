@@ -1,6 +1,8 @@
-#include "sef/args.h"
+#include "sef/_pubtypes.h"
+
 #include <stddef.h>
 #include <string.h>
+
 
 int SEF_ArgGet(const SEF_KeyVal_t argv[], const char **dst, const char *key) {
     while (argv->key) {
