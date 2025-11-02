@@ -1,3 +1,8 @@
+/*
+ > Module Error
+ @ Error handling
+*/
+
 #include "sef/error.h"
 
 #ifdef _MSC_VER

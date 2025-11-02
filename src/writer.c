@@ -1,3 +1,9 @@
+/*
+ > Module Writer
+ @ Abstracts write operations
+ | Allows the same interface to write to multiple destinations
+*/
+
 #include "sef/_writer.h"
 
 #include <limits.h>

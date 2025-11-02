@@ -1,3 +1,8 @@
+/*
+ > Module Error
+ @ Error handling
+*/
+
 #ifndef SEF_ERROR_H
 #define SEF_ERROR_H
 

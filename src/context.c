@@ -1,3 +1,6 @@
+/*
+TODO: change to BYOM pattern rather than allocation
+*/
 #include "sef/error.h"
 #include "sef/sef.h"
 

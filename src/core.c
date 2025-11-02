@@ -1,3 +1,9 @@
+/*
+ > Module Core
+ @ SEF's main functionalities
+ | Implements format functions, sinks etc. To provides printf-like interface
+*/
+
 #include "sef/_parse.h"
 #include "sef/_writer.h"
 #include "sef/_pubtypes.h"

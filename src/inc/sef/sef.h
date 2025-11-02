@@ -1,3 +1,11 @@
+/*
+ > Simple Extensible Formatter 
+ @ Extensible format library
+ | A format library which aims to be extensible via user-defined functions
+ | while prioritize efficiency and simplicity.
+TODO: implement BYOM pattern
+*/
+
 #ifndef SEF_H
 #define SEF_H
 
@@ -31,37 +39,38 @@ typedef struct {
 #endif
 
 /*
- *> Module Args
- *@ Manages KeyVal arrays
- */
+ > Module Args
+ @ Manages KeyVal arrays to fetch arguments
+*/
 int SEF_ArgGet(const SEF_KeyVal_t *argv, const char **dst, const char *key);
 int SEF_ArgGetV(const SEF_KeyVal_t *argv, const char **buf, const char **keys);
 
 /*
- *> Module Writer
- *@ Abstracts write operations
- *| Allows the same interface to write to multiple destinations
- */
+ > Module Writer
+ @ Abstracts write operations
+ | Allows the same interface to write to multiple destinations
+*/
 size_t SEF_SinkWrite(SEF_SinkHandler *sink, const char *s);
 
 /* 
- *> Module Reg
- *@ Manages formatter registry
- */
+ > Module Reg
+ @ Manages formatter registry
+*/
 int SEF_RegistryExists(SEF_Ctx_t *ctx, const char *specstr);
 SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *ctx, const char *specstr);
 
 /*
- *> Module Context
- *@ Manages formatting context 
- */
+ > Module Context
+ @ Manages formatting context 
+*/
 SEF_Ctx_t *SEF_CtxCreate(SEF_RegistrySlot_t *reg);
 void SEF_CtxDestroy(SEF_Ctx_t *ctx, int free_reg);
 
 /*
- *> Module Core
- *@ Prints to sink
- */
+ > Module Core
+ @ SEF's main functionalities
+ | Implements format functions, sinks etc. To provide printf-like interface
+*/
 size_t SEF_IPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
 
 #endif /* SEF_H */

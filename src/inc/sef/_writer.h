@@ -1,3 +1,8 @@
+/*
+ > Internal writer 
+ @ abstracts write destinations
+*/
+
 #ifndef _SEF_WRITER_H
 #define _SEF_WRITER_H
 
@@ -5,7 +10,7 @@
 #include <stdio.h>
 
 enum _sefWriteType {
-    _SEF_WTYPE_COUNT,
+    _SEF_WTYPE_COUNT = 0,
     _SEF_WTYPE_BUFFER_N,
     _SEF_WTYPE_FILE,
 };

@@ -1,3 +1,10 @@
+/*
+ > Internal parse
+ @ Defines parse utilities and IR definitions
+
+ TODO: use tagged union instead of pointer polymorphism for nodes
+ */
+
 #ifndef _SEF_PARSE_H
 #define _SEF_PARSE_H
 

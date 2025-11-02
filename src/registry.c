@@ -1,3 +1,8 @@
+/* 
+ > Module Reg
+ @ Manages formatter registry
+*/
+
 #include "sef/_pubtypes.h"
 
 int strcmp(const char*, const char*);

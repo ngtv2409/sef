@@ -1,3 +1,8 @@
+/*
+ > Module Args
+ @ Manages KeyVal arrays to fetch arguments
+*/
+
 #include "sef/_pubtypes.h"
 
 #include <stddef.h>

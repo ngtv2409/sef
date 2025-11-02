@@ -1,3 +1,8 @@
+/*
+ @ Internal usage of Public types
+ ! Must be included before sef.h if both are needed
+*/
+
 #ifndef _SEF_PUBTYPES_H
 #define _SEF_PUBTYPES_H
 
