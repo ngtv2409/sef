@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sef/args.h"
+
 typedef enum {
     _SEFNODE_LTR = 0, _SEFNODE_BFMT, _SEFNODE_PFMT
 } _sefNodeType_t;
@@ -14,16 +16,11 @@ typedef struct {
 } _sefNodeLTR_t;
 
 typedef struct {
-    char *key;
-    char *arg;
-} _sefArg_t;
-
-typedef struct {
     int type;
     int pos;
     // this id is the order in deplist
     int fmtid;
-    _sefArg_t *argv;
+    SEF_KeyVal_t *argv;
 } _sefNodeFMT_t;
 
 /*

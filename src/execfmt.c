@@ -16,13 +16,13 @@ static size_t _sefFmtChainRecursive(char *wbuffer, void *arg,
     
     _sefSinkHandler cntsink = {_SEF_WTYPE_COUNT, {}};
     size_t len = depfn[((_sefNodeFMT_t*)(nodes[i]))->fmtid]
-        ((SEF_SinkHandler*)&cntsink, arg, (SEF_FmtFnArg_t*)((_sefNodeFMT_t*)nodes[i])->argv);
+        ((SEF_SinkHandler*)&cntsink, arg, (SEF_KeyVal_t*)((_sefNodeFMT_t*)nodes[i])->argv);
     char buf[len + 1];
     _sefSinkHandler tmpsink = {
         _SEF_WTYPE_BUFFER_N, {.buf = {buf, 0, len + 1}}
     };
     depfn[((_sefNodeFMT_t*)(nodes[i]))->fmtid]
-        ((SEF_SinkHandler*)&tmpsink, arg, (SEF_FmtFnArg_t*)((_sefNodeFMT_t*)nodes[i])->argv);
+        ((SEF_SinkHandler*)&tmpsink, arg, (SEF_KeyVal_t*)((_sefNodeFMT_t*)nodes[i])->argv);
 
     if (i + 1 >= j) {
         // the end

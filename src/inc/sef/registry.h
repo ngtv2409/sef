@@ -1,12 +1,9 @@
 #pragma once
+#include "sef/args.h"
 #include "sef/writer.h"
 #include <stddef.h>
 
-/* Format function arguments
- * @_sefArg_t */
-typedef struct SEF_FmtFnArg_t SEF_FmtFnArg_t;
-
-typedef size_t (*SEF_FmtFn_t)(SEF_SinkHandler *, const void *, SEF_FmtFnArg_t *);
+typedef size_t (*SEF_FmtFn_t)(SEF_SinkHandler *, const void *, const SEF_KeyVal_t *);
 
 typedef struct {
     const char *key;
