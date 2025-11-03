@@ -97,3 +97,17 @@ size_t SEF_IPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
     _sefSinkHandler sink = {_SEF_WTYPE_FILE, {.file = {stdout}}};
     return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
 }
+
+size_t SEF_IcPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
+    _sefSinkHandler sink = {_SEF_WTYPE_COUNT, {}};
+    return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
+}
+
+size_t SEF_IfPrintf(FILE *stream, SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
+    _sefSinkHandler sink = {_SEF_WTYPE_FILE, {.file = {stream}}};
+    return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
+}
+size_t SEF_IsPrintf(char *str, size_t size, SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
+    _sefSinkHandler sink = {_SEF_WTYPE_BUFFER_N, {.buf = {str, 0, size}}};
+    return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
+}
