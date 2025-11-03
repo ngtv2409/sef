@@ -11,33 +11,35 @@
 #include "sef/_pubtypes.h"
 
 typedef enum {
-    _SEFNODE_LTR = 0, _SEFNODE_BFMT, _SEFNODE_PFMT
+    _SEFNODE_NULL = 0, _SEFNODE_LTR , _SEFNODE_BFMT, _SEFNODE_PFMT
 } _sefNodeType_t;
 
 typedef struct {
-    int type;
-} _sefNodeGeneric_t;
-
-typedef struct {
-    int type;
-    char *str;
+    const char *str;
 } _sefNodeLTR_t;
 
 typedef struct {
-    int type;
     int pos;
     // this id is the order in deplist
     int fmtid;
     SEF_KeyVal_t *argv;
 } _sefNodeFMT_t;
 
+typedef struct {
+    int type;
+    union {
+        _sefNodeLTR_t ltr;
+        _sefNodeFMT_t fmt;
+    } nodeinf;
+} _sefNode_t;
+
 /*
  * Format string intermidiate representation
  * Parser output
  */
 typedef struct {
-    char **deplist;
-    _sefNodeGeneric_t **nodes;
+    const char **deplist;
+    _sefNode_t *nodes;
 } _sefFmtIR_t;
 
 _sefFmtIR_t _sefFmtParse(const char *fmtstr);

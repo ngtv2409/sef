@@ -19,18 +19,18 @@ size_t SEF_SinkWrite(SEF_SinkHandler *sink, const char *s);
 SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *ctx, const char *specstr);
 
 static size_t _sefFmtChainRecursive(char *wbuffer, void *arg,
-                                    _sefNodeFMT_t *nodes[], SEF_FmtFn_t depfn[],
+                                    _sefNode_t *nodes, SEF_FmtFn_t *depfn,
                                     size_t i, size_t j) {
     
     _sefSinkHandler cntsink = {_SEF_WTYPE_COUNT, {0}};
-    size_t len = depfn[((_sefNodeFMT_t*)(nodes[i]))->fmtid]
-        ((SEF_SinkHandler*)&cntsink, arg, (SEF_KeyVal_t*)((_sefNodeFMT_t*)nodes[i])->argv);
+    size_t len = depfn[nodes[i].nodeinf.fmt.fmtid]
+        ((SEF_SinkHandler*)&cntsink, arg, nodes[i].nodeinf.fmt.argv);
     char buf[len + 1];
     _sefSinkHandler tmpsink = {
         _SEF_WTYPE_BUFFER_N, {.buf = {buf, 0, len + 1}}
     };
-    depfn[((_sefNodeFMT_t*)(nodes[i]))->fmtid]
-        ((SEF_SinkHandler*)&tmpsink, arg, (SEF_KeyVal_t*)((_sefNodeFMT_t*)nodes[i])->argv);
+    depfn[nodes[i].nodeinf.fmt.fmtid]
+        ((SEF_SinkHandler*)&tmpsink, arg, nodes[i].nodeinf.fmt.argv);
 
     if (i + 1 >= j) {
         // the end
@@ -48,8 +48,8 @@ size_t _sefFmtIR(SEF_Ctx_t *ctx, SEF_SinkHandler *sink,
                 SEF_FmtIR_t *_ir, void *args[]) {
     size_t n = 0;
     _sefFmtIR_t *ir = (_sefFmtIR_t*)_ir;
-    _sefNodeGeneric_t **nodes = ir->nodes;
-    char **deplist = ir->deplist;
+    _sefNode_t *nodes = ir->nodes;
+    const char **deplist = ir->deplist;
 
     size_t depcnt;
     for (depcnt = 0; deplist[depcnt]; ++depcnt);
@@ -65,21 +65,23 @@ size_t _sefFmtIR(SEF_Ctx_t *ctx, SEF_SinkHandler *sink,
 
     // execution
     // only alloc non-literal otherwise just ref
-    for (size_t i = 0; nodes[i]; ++i) {
-        switch (nodes[i]->type) {
+    for (size_t i = 0; nodes[i].type != _SEFNODE_NULL; ++i) {
+        switch (nodes[i].type) {
             case _SEFNODE_LTR:
-                n += SEF_SinkWrite(sink ,((_sefNodeLTR_t*)nodes[i])->str);
+                n += SEF_SinkWrite(sink, nodes[i].nodeinf.ltr.str);
                 break;
             case _SEFNODE_BFMT: {
                 (void)0;
-                void *arg = args[((_sefNodeFMT_t*)(nodes[i]))->pos];
+                void *arg = args[nodes[i].nodeinf.fmt.pos];
                 size_t pfmtend;
-                for (pfmtend = i + 1; nodes[pfmtend] &&
-                            nodes[pfmtend]->type == _SEFNODE_PFMT; ++pfmtend);
-                size_t len = _sefFmtChainRecursive(NULL, arg, (_sefNodeFMT_t**)nodes, depfn,
+                for (pfmtend = i + 1;
+                            nodes[pfmtend].type != _SEFNODE_NULL &&
+                            nodes[pfmtend].type == _SEFNODE_PFMT;
+                    ++pfmtend);
+                size_t len = _sefFmtChainRecursive(NULL, arg, nodes, depfn,
                                                    i, pfmtend);
                 char buf[len + 1];
-                _sefFmtChainRecursive(buf, arg, (_sefNodeFMT_t**)nodes, depfn,
+                _sefFmtChainRecursive(buf, arg, nodes, depfn,
                                       i, pfmtend);
                 n += SEF_SinkWrite(sink, buf);
                 i = pfmtend - 1;
