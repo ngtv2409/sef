@@ -28,6 +28,7 @@ set(
     src/error.c
     src/registry.c
     src/writer.c
+    src/size.c
 )
 
 include_directories(src/inc)

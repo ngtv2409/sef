@@ -9,8 +9,6 @@
 #include <stddef.h>
 
 //@opaque
-typedef struct SEF_Ctx_t SEF_Ctx_t;
-//@opaque
 typedef struct SEF_SinkHandler SEF_SinkHandler;
 //@opaque
 typedef struct SEF_FmtIR_t SEF_FmtIR_t;
@@ -25,5 +23,8 @@ typedef struct {
     SEF_FmtFn_t fn;
 } SEF_RegistrySlot_t;
 #define SEF_REGSLOT_TERM ((SEF_RegistrySlot_t){NULL, NULL})
+typedef struct {
+    SEF_RegistrySlot_t *registry;
+} SEF_Ctx_t;
 
 #endif /* _SEF_PUBTYPES_H */

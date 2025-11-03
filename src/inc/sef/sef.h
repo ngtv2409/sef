@@ -10,6 +10,7 @@ TODO: implement BYOM pattern
 #define SEF_H
 
 // for usage of NULL in macros
+#include <stdio.h>
 #include <stdlib.h> // IWYU pragma: keep
 // for size_t
 #include <stddef.h>
@@ -63,13 +64,24 @@ SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *ctx, const char *specstr);
  > Module Context
  @ Manages formatting context 
 */
-void SEF_CtxInit(SEF_Ctx_t *_ctx, SEF_RegistrySlot_t *reg);
+void SEF_CtxInit(SEF_Ctx_t *ctx, SEF_RegistrySlot_t *reg);
+size_t SEF_SizeOf_Ctx(void);
 
 /*
  > Module Core
  @ SEF's main functionalities
  | Implements format functions, sinks etc. To provide printf-like interface
 */
+
+/* IPrint (Print using IR as format) */
+
 size_t SEF_IPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
+
+/* @ Prints dry run (count size) */
+size_t SEF_IcPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
+/* @ Prints to a stream */
+size_t SEF_IfPrintf(FILE *stream, SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
+/* @ Prints to buffer (analogous to snprintf rather than sprintf (unsafe)) */
+size_t SEF_IsPrintf(char *str, size_t size, SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
 
 #endif /* SEF_H */
