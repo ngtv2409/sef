@@ -63,8 +63,7 @@ SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *ctx, const char *specstr);
  > Module Context
  @ Manages formatting context 
 */
-SEF_Ctx_t *SEF_CtxCreate(SEF_RegistrySlot_t *reg);
-void SEF_CtxDestroy(SEF_Ctx_t *ctx, int free_reg);
+void SEF_CtxInit(SEF_Ctx_t *_ctx, SEF_RegistrySlot_t *reg);
 
 /*
  > Module Core
