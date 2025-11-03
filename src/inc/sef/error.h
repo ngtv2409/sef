@@ -30,7 +30,7 @@ typedef enum {
 extern const char * const _SEF_ErrStrArray[SEF_ErrLast + 1];
 
 /* @ Errno address in memory (thread local) */
-extern int *_SEF_errno_addr();
+extern int *_SEF_errno_addr(void);
 /* @ Macro for transparent errno usage */
 #define SEF_Errno (*(_SEF_errno_addr()))
 /* @ Sets errno to Ok */

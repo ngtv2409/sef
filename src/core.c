@@ -22,7 +22,7 @@ static size_t _sefFmtChainRecursive(char *wbuffer, void *arg,
                                     _sefNodeFMT_t *nodes[], SEF_FmtFn_t depfn[],
                                     size_t i, size_t j) {
     
-    _sefSinkHandler cntsink = {_SEF_WTYPE_COUNT, {}};
+    _sefSinkHandler cntsink = {_SEF_WTYPE_COUNT, {0}};
     size_t len = depfn[((_sefNodeFMT_t*)(nodes[i]))->fmtid]
         ((SEF_SinkHandler*)&cntsink, arg, (SEF_KeyVal_t*)((_sefNodeFMT_t*)nodes[i])->argv);
     char buf[len + 1];
@@ -99,7 +99,7 @@ size_t SEF_IPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
 }
 
 size_t SEF_IcPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
-    _sefSinkHandler sink = {_SEF_WTYPE_COUNT, {}};
+    _sefSinkHandler sink = {_SEF_WTYPE_COUNT, {0}};
     return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
 }
 

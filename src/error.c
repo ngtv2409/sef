@@ -26,6 +26,6 @@ const char * const _SEF_ErrStrArray[SEF_ErrLast + 1] = {
     "Unknown error code"
 };
 
-int *_SEF_errno_addr() {
+int *_SEF_errno_addr(void) {
     return &_sefErrno;
 }
