@@ -36,7 +36,7 @@ typedef struct {
 #define SEF_REGSLOT_TERM ((SEF_RegistrySlot_t){NULL, NULL})
 
 typedef struct {
-    SEF_RegistrySlot_t *registry;
+    const SEF_RegistrySlot_t *registry;
 } SEF_Ctx_t;
 
 /* @ IR */
@@ -51,9 +51,9 @@ typedef struct {
             const char *str;
         } ltr;
         struct {
-            int pos;
+            size_t pos;
             // this id is the order in deplist
-            int fmtid;
+            size_t fmtid;
             SEF_KeyVal_t *argv;
         } fmt;
     } nodeinf;
@@ -65,7 +65,7 @@ typedef struct {
  */
 typedef struct {
     const char **deplist;
-    _sefNode_t *nodes;
+    const _sefNode_t *nodes;
 } SEF_FmtIR_t;
 
 /*
@@ -86,8 +86,8 @@ size_t SEF_SinkWrite(SEF_SinkHandler_t *sink, const char *s);
  > Module Reg
  @ Manages formatter registry
 */
-int SEF_RegistryExists(SEF_Ctx_t ctx, const char *specstr);
-SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t ctx, const char *specstr);
+int SEF_RegistryExists(const SEF_Ctx_t *ctx, const char *specstr);
+SEF_FmtFn_t SEF_RegistryGet(const SEF_Ctx_t *ctx, const char *specstr);
 
 /*
  > Module Context
@@ -104,14 +104,14 @@ SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t ctx, const char *specstr);
 
 /* IPrint (Print using IR as format) */
 
-size_t SEF_IPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
+size_t SEF_IPrintf(const SEF_Ctx_t *ctx, const SEF_FmtIR_t *ir, const void *args[]);
 
 /* @ Prints dry run (count size) */
-size_t SEF_IcPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
+size_t SEF_IcPrintf(const SEF_Ctx_t *ctx, const SEF_FmtIR_t *ir, const void *args[]);
 /* @ Prints to a stream */
-size_t SEF_IfPrintf(FILE *stream, SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
+size_t SEF_IfPrintf(FILE *stream, const SEF_Ctx_t *ctx, const SEF_FmtIR_t *ir, const void *args[]);
 /* @ Prints to buffer (analogous to snprintf rather than sprintf (unsafe)) */
-size_t SEF_IsPrintf(char *str, size_t size, SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]);
+size_t SEF_IsPrintf(char *str, size_t size, const SEF_Ctx_t *ctx, const SEF_FmtIR_t *ir, const void *args[]);
 
 /*
  > Module IR 

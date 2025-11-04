@@ -11,7 +11,7 @@ typedef struct {
     SEF_RegistrySlot_t *registry;
 } _sefCtx_t;
 
-int SEF_RegistryExists(SEF_Ctx_t *_ctx, const char *specstr) {
+int SEF_RegistryExists(const SEF_Ctx_t *_ctx, const char *specstr) {
     _sefCtx_t *ctx = (_sefCtx_t*)_ctx;
     SEF_RegistrySlot_t *buf = ctx->registry;
     while (buf->key) {
@@ -22,7 +22,7 @@ int SEF_RegistryExists(SEF_Ctx_t *_ctx, const char *specstr) {
     }
     return 0;
 }
-SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *_ctx, const char *specstr) {
+SEF_FmtFn_t SEF_RegistryGet(const SEF_Ctx_t *_ctx, const char *specstr) {
     _sefCtx_t *ctx = (_sefCtx_t*)_ctx;
     SEF_RegistrySlot_t *buf = ctx->registry;
     while (buf->key) {

@@ -23,7 +23,6 @@ message(STATUS "${PROJECT_NAME} version: ${PROJECT_VERSION}")
 set(
     SEF_SOURCES
     src/args.c
-    src/context.c
     src/core.c
     src/registry.c
     src/writer.c
