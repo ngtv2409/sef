@@ -4,33 +4,30 @@
  | Implements format functions, sinks etc. To provides printf-like interface
 */
 
-#include "sef/_parse.h"
 #include "sef/_writer.h"
-#include "sef/_pubtypes.h"
-
-#include "sef/error.h"
+#include "sef/sef.h"
 
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-size_t SEF_SinkWrite(SEF_SinkHandler *sink, const char *s);
+size_t SEF_SinkWrite(SEF_SinkHandler_t *sink, const char *s);
 SEF_FmtFn_t SEF_RegistryGet(SEF_Ctx_t *ctx, const char *specstr);
 
 static size_t _sefFmtChainRecursive(char *wbuffer, void *arg,
                                     _sefNode_t *nodes, SEF_FmtFn_t *depfn,
                                     size_t i, size_t j) {
     
-    _sefSinkHandler cntsink = {_SEF_WTYPE_COUNT, {0}};
+    _sefSinkHandler_t cntsink = {_SEF_WTYPE_COUNT, {0}};
     size_t len = depfn[nodes[i].nodeinf.fmt.fmtid]
-        ((SEF_SinkHandler*)&cntsink, arg, nodes[i].nodeinf.fmt.argv);
+        ((SEF_SinkHandler_t*)&cntsink, arg, nodes[i].nodeinf.fmt.argv);
     char buf[len + 1];
-    _sefSinkHandler tmpsink = {
+    _sefSinkHandler_t tmpsink = {
         _SEF_WTYPE_BUFFER_N, {.buf = {buf, 0, len + 1}}
     };
     depfn[nodes[i].nodeinf.fmt.fmtid]
-        ((SEF_SinkHandler*)&tmpsink, arg, nodes[i].nodeinf.fmt.argv);
+        ((SEF_SinkHandler_t*)&tmpsink, arg, nodes[i].nodeinf.fmt.argv);
 
     if (i + 1 >= j) {
         // the end
@@ -44,10 +41,9 @@ static size_t _sefFmtChainRecursive(char *wbuffer, void *arg,
     return _sefFmtChainRecursive(wbuffer, (void*)buf, nodes, depfn, i + 1, j);
 }
 
-size_t _sefFmtIR(SEF_Ctx_t *ctx, SEF_SinkHandler *sink,
-                SEF_FmtIR_t *_ir, void *args[]) {
+size_t _sefFmtIR(SEF_Ctx_t *ctx, SEF_SinkHandler_t *sink,
+                SEF_FmtIR_t *ir, void *args[]) {
     size_t n = 0;
-    _sefFmtIR_t *ir = (_sefFmtIR_t*)_ir;
     _sefNode_t *nodes = ir->nodes;
     const char **deplist = ir->deplist;
 
@@ -57,7 +53,6 @@ size_t _sefFmtIR(SEF_Ctx_t *ctx, SEF_SinkHandler *sink,
     for (size_t i = 0; i < depcnt; ++i) {
         SEF_FmtFn_t f = SEF_RegistryGet(ctx, deplist[i]);
         if (NULL == f) {
-            SEF_Errno = SEF_ErrRegFnNotFound;
             return 0;
         }
         depfn[i] = f;
@@ -96,20 +91,20 @@ size_t _sefFmtIR(SEF_Ctx_t *ctx, SEF_SinkHandler *sink,
 }
 
 size_t SEF_IPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
-    _sefSinkHandler sink = {_SEF_WTYPE_FILE, {.file = {stdout}}};
-    return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
+    _sefSinkHandler_t sink = {_SEF_WTYPE_FILE, {.file = {stdout}}};
+    return _sefFmtIR(ctx, (SEF_SinkHandler_t*)&sink, ir, args);
 }
 
 size_t SEF_IcPrintf(SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
-    _sefSinkHandler sink = {_SEF_WTYPE_COUNT, {0}};
-    return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
+    _sefSinkHandler_t sink = {_SEF_WTYPE_COUNT, {0}};
+    return _sefFmtIR(ctx, (SEF_SinkHandler_t*)&sink, ir, args);
 }
 
 size_t SEF_IfPrintf(FILE *stream, SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
-    _sefSinkHandler sink = {_SEF_WTYPE_FILE, {.file = {stream}}};
-    return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
+    _sefSinkHandler_t sink = {_SEF_WTYPE_FILE, {.file = {stream}}};
+    return _sefFmtIR(ctx, (SEF_SinkHandler_t*)&sink, ir, args);
 }
 size_t SEF_IsPrintf(char *str, size_t size, SEF_Ctx_t *ctx, SEF_FmtIR_t *ir, void *args[]) {
-    _sefSinkHandler sink = {_SEF_WTYPE_BUFFER_N, {.buf = {str, 0, size}}};
-    return _sefFmtIR(ctx, (SEF_SinkHandler*)&sink, ir, args);
+    _sefSinkHandler_t sink = {_SEF_WTYPE_BUFFER_N, {.buf = {str, 0, size}}};
+    return _sefFmtIR(ctx, (SEF_SinkHandler_t*)&sink, ir, args);
 }

@@ -25,10 +25,8 @@ set(
     src/args.c
     src/context.c
     src/core.c
-    src/error.c
     src/registry.c
     src/writer.c
-    src/size.c
 )
 
 include_directories(src/inc)

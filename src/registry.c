@@ -3,7 +3,7 @@
  @ Manages formatter registry
 */
 
-#include "sef/_pubtypes.h"
+#include "sef/sef.h"
 
 int strcmp(const char*, const char*);
 

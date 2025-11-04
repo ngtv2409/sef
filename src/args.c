@@ -3,7 +3,7 @@
  @ Manages KeyVal arrays to fetch arguments
 */
 
-#include "sef/_pubtypes.h"
+#include "sef/sef.h"
 
 #include <stddef.h>
 #include <string.h>

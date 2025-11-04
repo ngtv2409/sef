@@ -18,17 +18,17 @@ typedef struct {
     char *buf;
     size_t cur;
     size_t size;
-} _sefSinkBuf;
+} _sefSinkBuf_t;
 typedef struct {
     FILE *f;
-} _sefSinkFile;
+} _sefSinkFile_t;
 
 typedef struct {
     int wtype;
     union {
-        _sefSinkBuf buf;
-        _sefSinkFile file;
+        _sefSinkBuf_t buf;
+        _sefSinkFile_t file;
     } sink;
-} _sefSinkHandler;
+} _sefSinkHandler_t;
 
 #endif /* _SEF_WRITER_H */

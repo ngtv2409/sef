@@ -10,15 +10,15 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef struct SEF_SinkHandler SEF_SinkHandler;
+typedef struct SEF_SinkHandler_t SEF_SinkHandler_t;
 
-size_t SEF_SinkWrite(SEF_SinkHandler *_sink, const char *s) {
-    _sefSinkHandler *sink = (_sefSinkHandler*)_sink;
+size_t SEF_SinkWrite(SEF_SinkHandler_t *_sink, const char *s) {
+    _sefSinkHandler_t *sink = (_sefSinkHandler_t*)_sink;
     size_t n = 0;
     if (sink->wtype == _SEF_WTYPE_COUNT) {
         return strlen(s);
     } else if (sink->wtype == _SEF_WTYPE_BUFFER_N) {
-        _sefSinkBuf inf = sink->sink.buf;
+        _sefSinkBuf_t inf = sink->sink.buf;
         while (inf.cur < inf.size - 1) {
             if (!s[n]) break;
             if (inf.buf) {
