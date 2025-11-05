@@ -27,8 +27,11 @@ static size_t _sefFmtChainRecursive(char *wbuffer, const void *arg,
     _sefSinkHandler_t tmpsink = {
         _SEF_WTYPE_BUFFER_N, {.buf = {buf, 0, SEF_LIM_MAXINTSTR}}
     };
-    depfn[nodes[i].nodeinf.fmt.fmtid]
+    size_t l = depfn[nodes[i].nodeinf.fmt.fmtid]
         ((SEF_SinkHandler_t*)&tmpsink, arg, nodes[i].nodeinf.fmt.argv);
+    if (l == SEF_Err) {
+        return SEF_Err;
+    }
 
     if (i + 1 >= j) {
         // the end
