@@ -3,6 +3,8 @@
  @ Extensible format library
  | A format library which aims to be extensible via user-defined functions
  | while prioritize efficiency and simplicity.
+
+TODO: formallize a doc format and write code documentation
 */
 
 #ifndef SEF_H
@@ -18,26 +20,28 @@
 #define SEF_Err ((size_t)~0)
 
 /* Typedefs */
-/*
-   defines only if _pubtypes.h is not included to avoid redefinition
-   this is for debug when inclusion of both api internal headers are necessary
+/*@opaque
+ @ Sink abstraction for write destinations
 */
-//@opaque
 typedef struct SEF_SinkHandler_t SEF_SinkHandler_t;
 
+/* @ Key-value pairs for arguments */
 typedef struct {
     const char *key, *val;
 } SEF_KeyVal_t;
 #define SEF_KEYVAL_TERM ((SEF_KeyVal_t){NULL, NULL})
 
+/* @ Format function signature */
 typedef size_t (*SEF_FmtFn_t)(SEF_SinkHandler_t *, const void *, const SEF_KeyVal_t *);
 
+/* @ Slot structure in registry */
 typedef struct {
     const char *key;
     SEF_FmtFn_t fn;
 } SEF_RegistrySlot_t;
 #define SEF_REGSLOT_TERM ((SEF_RegistrySlot_t){NULL, NULL})
 
+/* @ Ctx */
 typedef struct {
     const SEF_RegistrySlot_t *registry;
 } SEF_Ctx_t;
@@ -63,9 +67,8 @@ typedef struct {
 } _sefNode_t;
 
 /*
- * Format string intermidiate representation
- * Parser output
- */
+ @Format string intermidiate representation
+*/
 typedef struct {
     const char **deplist;
     _sefNode_t *nodes;
@@ -75,6 +78,7 @@ typedef struct {
  > Module Args
  @ Manages KeyVal arrays to fetch arguments
 */
+
 int SEF_ArgGet(const SEF_KeyVal_t *argv, const char **dst, const char *key);
 int SEF_ArgGetV(const SEF_KeyVal_t *argv, const char **buf, const char **keys);
 
