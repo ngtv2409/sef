@@ -14,6 +14,9 @@
 // for size_t
 #include <stddef.h>
 
+/* @ For size_t returned functions, max is reserved for errors */
+#define SEF_Err ((size_t)~0)
+
 /* Typedefs */
 /*
    defines only if _pubtypes.h is not included to avoid redefinition
