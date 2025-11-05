@@ -65,7 +65,7 @@ typedef struct {
  */
 typedef struct {
     const char **deplist;
-    const _sefNode_t *nodes;
+    _sefNode_t *nodes;
 } SEF_FmtIR_t;
 
 /*
@@ -122,5 +122,13 @@ size_t SEF_IsPrintf(char *str, size_t size, const SEF_Ctx_t *ctx, const SEF_FmtI
  ! So think twice before touching what you ain't supposed to
  ! A string frontend will not be available anytime soon
 */
+
+#define SEF_ARGV(...) ((SEF_KeyVal_t[]){__VA_ARGS__, SEF_KEYVAL_TERM})
+
+#define SEF_IR_BEGIN(...) ((SEF_FmtIR_t){.deplist = (const char*[]){__VA_ARGS__, NULL}, .nodes = (_sefNode_t[]){
+#define SEF_IR_L(str) {.type = _SEFNODE_LTR, .nodeinf.ltr = {str}},
+#define SEF_IR_BF(pos, fmtid, argv) {.type = _SEFNODE_BFMT, .nodeinf.fmt = {pos, fmtid, argv}},
+#define SEF_IR_PF(fmtid, argv) {.type = _SEFNODE_PFMT, .nodeinf.fmt = {0, fmtid, argv}},
+#define SEF_IR_END() {.type = _SEFNODE_NULL, {0}}}})
 
 #endif /* SEF_H */
