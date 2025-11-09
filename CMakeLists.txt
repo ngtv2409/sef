@@ -11,10 +11,10 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-set(_Version_Major 0)
-set(_Version_Minor 1)
+set(_Version_Major 1)
+set(_Version_Minor 0)
 set(_Version_Patch 0)
-set(_Version_Status "-dev")
+set(_Version_Status "")
 set(PROJECT_VERSION
     "${_Version_Major}.${_Version_Minor}.${_Version_Patch}${_Version_Status}"
 )

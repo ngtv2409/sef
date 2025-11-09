@@ -5,6 +5,8 @@ use them in a simple unified interface.
 
 Version 1.0.0 (stable)
 
+Note: The documentation is still unfinished/half-formed
+
 ## Features
 **SEF** allows you to format any object with custom functions following core 
 principles called *Formatter* in a composable way, here is an example:
